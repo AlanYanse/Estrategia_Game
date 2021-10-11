@@ -1,0 +1,11 @@
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.exe
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.deps.json
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.runtimeconfig.json
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.runtimeconfig.dev.json
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.dll
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\bin\Debug\netcoreapp3.1\Estrategia_Game.pdb
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\obj\Debug\netcoreapp3.1\Estrategia_Game.csprojAssemblyReference.cache
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\obj\Debug\netcoreapp3.1\Estrategia_Game.AssemblyInfoInputs.cache
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\obj\Debug\netcoreapp3.1\Estrategia_Game.AssemblyInfo.cs
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\obj\Debug\netcoreapp3.1\Estrategia_Game.dll
+C:\Users\alan_\OneDrive\Escritorio\Magalan\Diseño\Proyectos C#\Estrategia-Game\Estrategia_Game\obj\Debug\netcoreapp3.1\Estrategia_Game.pdb
