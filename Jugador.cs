@@ -72,7 +72,7 @@ namespace Estrategia_Game
 
 				if (opcion == "1")
 				{
-					Console.WriteLine("Jugador" + o_jugador_defensor.getNombre() + " presionar enter para lanzar el dado ");
+					Console.WriteLine("Jugador " + o_jugador_defensor.getNombre() + " presionar enter para lanzar el dadito");
 					Console.ReadLine();
 					int num_defensor = dadito.lanzarDado();
 					Console.WriteLine("Te ha salido " + num_defensor);

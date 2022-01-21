@@ -7,20 +7,22 @@ namespace Estrategia_Game
 {
     public class Game
     {
-		private string opcion;
+		
 		private int cant_jugadores, cant_rondas;
-		private bool continuar = true;
-		//private ArrayList jugadores = new ArrayList(); Al principio quise usar un ArrayList pero no me sirvió
+		
 		List<Jugador> lista_jugadores = new List<Jugador>();
 
+//-------------- CONSTRUCTOR -------------------
 
 		public Game()
 		{
 			Console.Clear();
-			Console.Title = "Estrategy";
+			Console.Title = "Estrategya";
 			run();
 		}
 
+//----------------------------------------------
+		
 		public void run()
 		{
 
@@ -28,11 +30,15 @@ namespace Estrategia_Game
 
 		}
 
+
+//----------------------------------------------
+
 		public void menuInicio()
 		{
+			string opcion;
 
 
-			Console.WriteLine("====================BIENVENIDOS A ESTRATEGY====================");
+			presentacion();
 
 
 			do
@@ -46,7 +52,6 @@ namespace Estrategia_Game
 				if (opcion == "1")
 				{
 
-					Console.WriteLine("Se eligió jugar");
 
 					pantallaCrearPartida();
 					jugarBuclePrincipal();
@@ -56,7 +61,10 @@ namespace Estrategia_Game
 				{
 
 					Console.WriteLine("Se eligió salir");
+					
+					Console.WriteLine("Presionar enter para cerrar la aplicación");
 
+					Environment.Exit(0);
 				}
 				else
 				{
@@ -77,20 +85,45 @@ namespace Estrategia_Game
 
 		}
 
+
+//----------------------------------------------
+
 		public void pantallaCrearPartida()
 		{
 
+			string cadena;
+
 			Console.Clear();
 
-			Console.WriteLine("Ingresar la cantidad de jugadores");
+			do
+			{
+								
 
-			cant_jugadores = int.Parse(Console.ReadLine());
+				Console.WriteLine("Ingresar la cantidad de jugadores");
+
+				cadena = Console.ReadLine();
+
+				if (Char.IsNumber(cadena, 0) == true) // Método IsNumber es para saber si un char o string es número.
+				{
+					cant_jugadores = int.Parse(cadena);
+				}
+				else
+				{
+					Console.WriteLine("ingresar un valor numerico. presionar enter para continuar");
+					Console.ReadLine();
+					pantallaCrearPartida();
+				}
+				
+			} while(cant_jugadores < 2); // se va repetir esto hasta que el usuario ingrese un valor numérico y mayor o igual a 2.
 
 			Console.WriteLine("La cantidad de jugadores que disputarán el Deathmatch es: " + cant_jugadores);
 
-			asignarJugadores();
+			asignarJugadores(); // Finalmente si el usuario ingresa bien los valores se pueden agregar los jugadores
+
 
 		}
+
+		//-------- Método que permite agregar los jugadores a la partida mediante una List -------------
 
 		public void asignarJugadores()
 		{
@@ -108,7 +141,7 @@ namespace Estrategia_Game
 
 			}
 
-			Console.WriteLine("Presionar una tecla para continuar");
+			Console.WriteLine("presionar enter para continuar");
 
 			Console.ReadLine();
 
@@ -116,43 +149,60 @@ namespace Estrategia_Game
 
 		}
 
+
+//----------------------------------------------
+
 		public void jugarBuclePrincipal()
 		{
-
-			
-			string eleccion;
+						
+			string opcion;
 
 			Console.Clear();
 
 			//---------------------- Acá se empieza a jugar el bucle pricipal -------------------------------------
 
-			pintarDashBoard();
+			pintarDashBoard(); // Es la tabla donde puede visualizarse la información principal del juego
+						
+			rondaDinova(); // Método donde se ejecuta las rondas del juego
 
-			do
+			Console.WriteLine("Fin del juego");
+
+			Console.WriteLine("Volver a jugar S/N");
+
+			opcion = Console.ReadLine().ToLower();
+
+			if(opcion == "s")
 			{
 
-				rondaDinova(); // Método donde se ejecuta las rondas del juego
+				menuInicio();
 
+			}else
+			{
 
+				Environment.Exit(0);
+			}
 
-				
-
-			} while (cant_jugadores > 1 && continuar == true);
 
 		}
 
+
+//----------------------------------------------
+
 		public void pintarDashBoard()
 		{
-			Console.WriteLine("==== ID ==== NOMBRE ==== COLONIAS ===");
+			Console.WriteLine("===== ID ======== NOMBRE ==== COLONIAS ========");
 
 			foreach (Jugador player in lista_jugadores)
 			{
-				Console.WriteLine("     " + player.getId() + "        " + player.getNombre() + "        " + player.getColonias());
+				Console.WriteLine("       " + player.getId() + "          " + player.getNombre() + "          " + player.getColonias());
 				
 			}
 
 
 		}
+
+		
+//----------------------------------------------
 
 		public void rondaDinova()
 		{
@@ -171,21 +221,27 @@ namespace Estrategia_Game
 
 				Console.WriteLine("ha transcurrido " + cant_rondas + " rondas");
 
-				//continuar = false;
-
-							   
+										   
 
 			} while (cant_jugadores > 1);
-			
-				
+
+			Jugador jugador_ganador = lista_jugadores.Find(p => p.getColonias() > 0);
+
+			Console.WriteLine("Felicitaciones jugador " + jugador_ganador.getNombre() + " has ganado el Deathmatch");
+
+			lista_jugadores.Clear();
 			
 		}
+
+		
+//----------------------------------------------
 
 		public void turno(Jugador el_jugador_de_turno) // Para tener referencia de los jugadores se les pasa el objeto Jugador por parámetro
 		{
 
 			string opcion_turno;
 			bool resultado;
+			bool existe = true;
 
 			Console.WriteLine("Es el turno del jugador " + el_jugador_de_turno.getId() + " " + el_jugador_de_turno.getNombre());
 
@@ -208,74 +264,101 @@ namespace Estrategia_Game
 				if (opcion_turno == "1") // ATACAR
 				{
 
-					string jugador_defensor;
 					
+
+					string jugador_defensor;
+
 					// Se tendrá que ejecutar el método el_jugador_de_turno.atacar();
 					// Visualizar el dashboar
-					
-																	
 
-					visualizarDashboardDeTurno(el_jugador_de_turno); // Este es un dashboard distinto al del comienzo.
-
-					Console.WriteLine("====================================================");
-					Console.WriteLine("Ingresar el nombre del jugador que se quiere atacar");
-					Console.WriteLine("====================================================");
-
-					jugador_defensor = Console.ReadLine(); // Después tengo que vincular esto al objeto getNombre() y pasarlo como parámetro al método atacar
-
-					Jugador o_jugador_defensor = lista_jugadores.Find(p => p.getNombre().Equals(jugador_defensor)); // Uso del método find para obtener el objeto del jugador al cual se elige atacar
-
-					Console.WriteLine("Has elegido atacar a " + o_jugador_defensor.getNombre());
-
-					Console.WriteLine("====================================================");
-					Console.WriteLine("Jugador " + el_jugador_de_turno.getId() + " " + el_jugador_de_turno.getNombre() + " presionar enter para tirar el dadito");
-					Console.WriteLine("====================================================");
-					Console.ReadLine();
-					resultado = el_jugador_de_turno.atacar(o_jugador_defensor); // el método atacar() devuelve true si el atacante gana o false si el atacante pierde.
-
-					Console.WriteLine(resultado);
-
-					//---------------- A continuación el bloque de código para sumar o restar colonias a los jugadores ---------------
-
-					if(resultado == true)
+					do
 					{
-						Console.WriteLine("Hay que sumarle una colonia al jugador de turno y restarle una al jugador defensor");
-						el_jugador_de_turno.setColonia(resultado);
 
-						resultado = false;
-						o_jugador_defensor.setColonia(resultado);
+						visualizarDashboardDeTurno(el_jugador_de_turno); // Este es un dashboard distinto al del comienzo.
+
+						Console.WriteLine("====================================================");
+						Console.WriteLine("Ingresar el nombre del jugador que se quiere atacar");
+						Console.WriteLine("====================================================");
+
+						jugador_defensor = Console.ReadLine().ToLower(); // Después tengo que vincular esto al objeto getNombre() y pasarlo como parámetro al método atacar
 
 
-						if (o_jugador_defensor.getColonias() == 0)
+
+						if (lista_jugadores.Exists(p => p.getNombre().Equals(jugador_defensor)))
 						{
-							lista_jugadores.Remove(o_jugador_defensor);
-							cant_jugadores -= 1;
+
+							existe = true;
+
+							Jugador o_jugador_defensor = lista_jugadores.Find(p => p.getNombre().Equals(jugador_defensor)); // Uso del método find para obtener el objeto del jugador al cual se elige atacar
+
+							Console.WriteLine("Has elegido atacar a " + o_jugador_defensor.getNombre());
+
+							Console.WriteLine("====================================================");
+							Console.WriteLine("Jugador " + el_jugador_de_turno.getId() + " " + el_jugador_de_turno.getNombre() + " presionar enter para tirar el dadito");
+							Console.WriteLine("====================================================");
+							Console.ReadLine();
+							resultado = el_jugador_de_turno.atacar(o_jugador_defensor); // el método atacar() devuelve true si el atacante gana o false si el atacante pierde.
+
+							//Console.WriteLine(resultado);
+
+							//---------------- A continuación el bloque de código para sumar o restar colonias a los jugadores ---------------
+
+							if (resultado == true)
+							{
+								Console.WriteLine("Resultado Parcial");
+								el_jugador_de_turno.setColonia(resultado);
+
+								resultado = false;
+								o_jugador_defensor.setColonia(resultado);
+
+
+								if (o_jugador_defensor.getColonias() == 0)
+								{
+									lista_jugadores.Remove(o_jugador_defensor);
+									Console.WriteLine("El jugador " + o_jugador_defensor.getNombre() + " ha sido eliminado");
+									cant_jugadores -= 1;
+								}
+
+
+							}
+
+							else
+							{
+								
+								Console.WriteLine("Resultado Parcial");
+								
+								el_jugador_de_turno.setColonia(resultado);
+
+								resultado = true;
+								o_jugador_defensor.setColonia(resultado);
+
+								if (el_jugador_de_turno.getColonias() == 0)
+								{
+									lista_jugadores.Remove(el_jugador_de_turno);
+									Console.WriteLine("El jugador " + el_jugador_de_turno.getNombre() + " ha sido eliminado");
+									cant_jugadores -= 1;
+								}
+							}
+
+						}
+						else
+						{
+							Console.WriteLine("El nombre ingresado no es válido");
+							existe = false;
 						}
 
-						
+
+					} while (existe == false);												
+
 					
-					}
-
-					else
-					{
-						Console.WriteLine("Hay que sumarle una colonia al jugador defensor y restarle una al jugador de turno");
-						el_jugador_de_turno.setColonia(resultado);
-
-						resultado = true;
-						o_jugador_defensor.setColonia(resultado);
-
-						if (el_jugador_de_turno.getColonias() == 0)
-						{
-							lista_jugadores.Remove(el_jugador_de_turno);
-							cant_jugadores -= 1;
-						}
-					}
-
 
 				}
 				else if (opcion_turno == "2") // PASAR DE TODO
 				{
-					// Se tendrá que ejecutar el método el_jugador_de_turno.pasarDeTodo(); 
+					Console.WriteLine("Elegiste pasar de todo");
+					Console.WriteLine("Presionar enter para el siguiente turno");
+					Console.ReadLine();
+
 				}
 				else
 				{
@@ -291,24 +374,121 @@ namespace Estrategia_Game
 		
 		}
 
+
+//----------------------------------------------
+
 		public void visualizarDashboardDeTurno(Jugador player)
 		{
 
-			Console.WriteLine("==== ID ==== NOMBRE ==== COLONIAS ===");
+			Console.WriteLine("===== ID ======== NOMBRE ==== COLONIAS ========");
 
 			
 			for(int i = 0; i < lista_jugadores.Count; i++)
 			{
 				if(lista_jugadores[i].getNombre() != player.getNombre()) // Se filtra para que no aparezca el jugador de turno en el dashboard
 				{
-					Console.WriteLine(lista_jugadores[i].getId() + lista_jugadores[i].getNombre() + lista_jugadores[i].getColonias());
+					Console.WriteLine("       " + lista_jugadores[i].getId() + "          " + lista_jugadores[i].getNombre() + "       " +  lista_jugadores[i].getColonias());
 				}
 				
 				
 			}
 
 
+			
+
+
 		}
 
-	}
+
+
+//----------------------------------------------
+
+						public void presentacion(){
+							
+
+							Console.Clear();
+							
+
+							Console.ForegroundColor = ConsoleColor.Green;
+						
+
+							Console.WriteLine("");
+
+							Console.WriteLine("");
+
+							Console.WriteLine("         8888888888 .d8888b.888888888888888888b.        d8888888888888888888888888 .d8888b.Y88b   d88P    d8888");
+						
+							Console.WriteLine("         888       d88P  Y88b   888    888   Y88b      d88888    888    888       d88P  Y88bY88b d88P    d88888");
+						
+							Console.WriteLine("         888       Y88b         888    888    888     d88P888    888    888       888    888 Y88o88P    d88P888");
+						
+							Console.WriteLine("         8888888     Y888b      888    888   d88P    d88P 888    888    8888888   888         Y888P    d88P 888");
+						
+							Console.WriteLine("         888            Y88b    888    8888888P     d88P  888    888    888       888  88888   888    d88P  888");
+						
+							Console.WriteLine("         888              888   888    888 T88b    d88P   888    888    888       888    888   888   d88P   888");
+						
+							Console.WriteLine("         888       Y88b  d88P   888    888  T88b  d8888888888    888    888       Y88b  d88P   888  d8888888888");
+						
+							Console.WriteLine("         8888888888  Y8888P     888    888   T88bd88P     888    888    8888888888  Y8888P88   888 d88P     888");
+							
+							Console.ForegroundColor = ConsoleColor.Magenta;
+							
+							Console.WriteLine("");
+
+							Console.WriteLine("                                                                                                          V^1.0");
+							
+							Console.WriteLine("                                                                                                     Alan Yanse");
+							
+							Console.WriteLine("                                                                                                     21/01/2022");
+							
+							Console.WriteLine("");
+							
+							Console.WriteLine("");
+							
+							Console.ResetColor();
+
+
+
+
+						}
+
+	
+
+
+	     }
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
